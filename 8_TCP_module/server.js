@@ -27,15 +27,28 @@ function onConnection(conn) {
         if(!name) {
             if(users[name]) {
                 conn.write(`Name: ${data} already taken. Choose another one\n`);
+            } else {
+                name = data;
+                users[name] = conn;
+                shoutOut(`${name} joined the chat\n`);
             }
         } else {
-            conn.write(`${name}: ${data}`)
+            shoutOut(`${name}: ${data}`);
         }
     });
     conn.on('close', () => {
         count -= 1;
         delete users[name];
-        // conn.write();
-        log(`${name} left the chat\n`)
-    })
+        shoutOut(`${name} has left the chat\n`)
+    });
+
+    function shoutOut(msg) {
+        Object.keys(users)
+                .forEach(user => {
+                    const connection = users[user];
+                    if(user != name) {
+                        connection.write(msg);
+                    }
+                });
+    }
 }
