@@ -17,6 +17,7 @@ const handler = {
     },
     connect() {
         console.log('connecting...');
+        this.retries = 0;
         this.conn = net.createConnection(port);
         this.conn.on('close', this.close.bind(this));
         this.conn.on('error', this.error.bind(this));
@@ -27,15 +28,20 @@ const handler = {
     close() {
         console.log('Connection closed... Trying again');
         process.stdin.pause();
+        process.stdin.removeAllListeners();
         this.reconnect();
     },
     error(err) {
         console.log(`Error: ${err}`);
+        process.stdin.removeAllListeners();
         this.reconnect();
     },
     reconnect() {
-        console.log('reconnecting...');
-        
+        if(this.retries >= this.maxRetries) {
+            throw new Error('The connection is realy broke bro ((')
+        }
+        this.retries += 1;
+        setTimeout(this.connect.bind(this), this.interval)
     }
 };
 

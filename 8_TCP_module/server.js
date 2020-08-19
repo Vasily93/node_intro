@@ -25,7 +25,7 @@ function onConnection(conn) {
     count += 1;
     conn.on('data', function onData(data) {
         if(!name) {
-            if(users[name]) {
+            if(users[data]) {
                 conn.write(`Name: ${data} already taken. Choose another one\n`);
             } else {
                 name = data;
