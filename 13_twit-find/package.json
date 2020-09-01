@@ -1,0 +1,23 @@
+{
+  "name": "twit-find",
+  "version": "0.0.1",
+  "description": "Twitter command line search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vasily93/node_intro.git"
+  },
+  "author": "Vasily",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vasily93/node_intro/issues"
+  },
+  "homepage": "https://github.com/Vasily93/node_intro#readme",
+  "dependencies": {
+    "commander": "^6.1.0",
+    "twit": "^2.2.11"
+  }
+}
