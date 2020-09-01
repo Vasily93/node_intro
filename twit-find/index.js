@@ -14,14 +14,17 @@ program
     .parse(process.argv)
 
     function search(query) {
+        const limit = program.limit || 5;
         client.get('search/tweets', 
-                {q: 'Elon Musk'},
+                {q: query, count: limit},
                 (err, data, response) => {
                     if(err) {
                         throw Error(err);
                     }
                     // log(data)
-                    const tweets = data.statuses.map(obj => obj.text);
-                    log(tweets);
+                    const tweets = data.statuses
+                                            .map(obj => obj.text)
+                                            .join('\n\n');
+                    log(tweets)
                 })    
     }
