@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #out {
+            background-color: darkblue;
+            width:100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header">Here's your click map</h1>
+    <div id="out"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
+    <script>
+        const circle = (x, y, radius) => {
+            const element = document.createElement('div');
+            element.style.width = `${radius}px`;
+            element.style.height = `${radius}px`;
+            element.style.borderRadius = '100%';
+            element.style.position = 'fixed';
+            element.style.backgroundColor = 'lightblue';
+            element.style.top = `${y}px`;
+            element.style.left = `${x}px`;
+            return element;
+        };
+
+        const socket = io();
+        const radius = 10;
+        const out = document.querySelector('#out');
+
+        socket.emit('retrieve');
+        socket.on('analytics', points => {
+           const circles = points.map(point => circle(point.x, point.y, radius));
+           circles.forEach(c => out.append(c));
+        });
+    </script>
+</body>
+</html>

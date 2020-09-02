@@ -6,6 +6,18 @@
     <title>Click Capture App</title>
 </head>
 <body>
-    <h1>Counting the Clicks!</h1>
+    <h1>Click Away Dear Visitor!</h1>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
+    <script>
+        const socket = io();
+        document.addEventListener('click', e => {
+            const {x, y} = e;
+            socket.emit('click', {x, y})
+        });    
+    </script>
+    <!-- <script src="./index.js"></script> -->
 </body>
 </html>
